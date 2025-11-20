@@ -6,22 +6,12 @@ from datetime import datetime
 
 app = Flask(__name__, template_folder="suplementos_gym/templates")
 app.secret_key = 'dev-secret'
-
-# ---------------------- CONEXIÓN A MONGO ATLAS ----------------------
-MONGO_URI = os.environ.get(
-    "MONGO_URI",
-    ("MONGO_URI", "mongodb+srv://santosmartinezerikcbtis272:1234@escuela.qjn2uo9.mongodb.net/escuela")
-)
-
-client = MongoClient(MONGO_URI)
-
-# Nombre de tu BD importada en Atlas
-db = client["suplementos_gym"]
-
-productos_col = db["productos"]
-usuarios_col = db["usuarios"]
-pedidos_col = db["pedidos"]
-
+# ---------------------- CONEXIÓN MONGO ----------------------
+client = MongoClient('mongodb://localhost:27017/')
+db = client['suplementos_gym']
+productos_col = db['productos']
+usuarios_col = db['usuarios']
+pedidos_col = db['pedidos']
 
 # ---------------------- FUNCIONES AUXILIARES ----------------------
 def obtener_usuario():
@@ -248,5 +238,6 @@ def confirm_order():
 # ---------------------- EJECUTAR APP ----------------------
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
