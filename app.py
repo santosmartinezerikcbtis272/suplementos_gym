@@ -4,7 +4,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="suplementos_gym/templates")
 app.secret_key = 'dev-secret'
 
 # ---------------------- CONEXIÓN MONGO ----------------------
@@ -239,3 +239,4 @@ def confirm_order():
 # ---------------------- EJECUTAR APP ----------------------
 if __name__ == '__main__':
     app.run(debug=True)
+
