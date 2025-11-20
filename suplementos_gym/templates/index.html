@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="fondo-index">
+
+  <!-- SECCIÓN HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>💪 SUPLEMENTOS GYM 💪</h1>
+      <p>Potencia tu entrenamiento con los mejores suplementos</p>
+      <a href="#productosa  " class="btn-hero">Ver productos</a>
+    </div>
+  </section>
+
+  <!-- BANNER DE ANUNCIO -->
+  <section class="banner-anuncio">
+    <p>⚡ ¡Oferta del día! 20% de descuento en todas las proteínas ⚡</p>
+  </section>
+
+  <!-- LISTA DE PRODUCTOS -->
+  <section id="productos" class="products">
+    {% if productos %}
+      {% for producto in productos %}
+        <div class="product-card">
+          <img src="{{ url_for('static', filename='img/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
+          <div class="productos-info">
+            <h3>{{ producto.nombre }}</h3>
+            <p class="marca">{{ producto.marca }}</p>
+            <p class="descripcion">{{ producto.descripcion }}</p>
+            <p class="precio">${{ producto.precio }}</p>
+            <form action="/agregar_carrito/{{ producto._id }}" method="POST">
+              <button type="submit" class="btn-agregar">🛒 Agregar al carrito</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="text-align:center;">No hay productos disponibles.</p>
+    {% endif %}
+  </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="checkout-container">
+  <!-- Resumen de compra -->
+  <div class="resumen-compra">
+    <h2> RESUMEN DE COMPRA</h2>
+    <ul>
+      {% for producto in productos %}
+        <li>{{ producto.nombre }} (x1) — <span>${{ producto.precio }}</span></li>
+      {% endfor %}
+    </ul>
+    <hr>
+    <p class="total">Total: <strong>${{ total }}</strong></p>
+  </div>
+
+  <!-- Formulario de pago -->
+  <div class="formulario-pago">
+    <h2> DATOS DE PAGO</h2>
+    <form method="POST" action="/procesar_pago">
+      <input type="text" name="nombre" placeholder="Nombre completo" value="{{ user.nombre }}" required>
+      <input type="email" name="email" placeholder="Correo electrónico" value="{{ user.email }}" required>
+      <input type="text" name="direccion" placeholder="Dirección de envío" required>
+      <input type="text" name="tarjeta" placeholder="Número de tarjeta" required maxlength="16">
+      <input type="text" name="cvv" placeholder="CVV (3 dígitos)" required maxlength="3">
+      <label>Fecha de expiración:</label>
+      <input type="month" name="expiracion" required>
+      <button type="submit" class="btn-confirmar">Confirmar pago</button>
+    </form>
+  </div>
+</div>
+
+<style>
+.checkout-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1a1a1a 0%, #0d0d0d 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.resumen-compra, .formulario-pago {
+  background: #1c1c1c;
+  color: #eee;
+  border: 1px solid #a30000;
+  border-radius: 12px;
+  padding: 25px;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(163, 0, 0, 0.3);
+  transition: 0.3s ease;
+}
+
+.resumen-compra:hover, .formulario-pago:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+}
+
+.resumen-compra h2, .formulario-pago h2 {
+  color: #ff3333;
+  text-align: center;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.resumen-compra ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resumen-compra li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+  color: #ccc;
+}
+
+.resumen-compra li span {
+  color: #ff5050;
+}
+
+.total {
+  text-align: right;
+  font-size: 1.2rem;
+  color: #ff6666;
+}
+
+.formulario-pago input {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #550000;
+  background-color: #121212;
+  color: #fff;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.formulario-pago input:focus {
+  border-color: #ff3333;
+}
+
+.btn-confirmar {
+  background: linear-gradient(90deg, #ff1a1a, #cc0000);
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
+}
+
+.btn-confirmar:hover {
+  background: linear-gradient(90deg, #cc0000, #990000);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+label {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+</style>
+
+{% endblock %}

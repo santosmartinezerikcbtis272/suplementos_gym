@@ -1,0 +1,39 @@
+<div class="producto-detalle">
+    <img src="{{ url_for('static', filename='img/' ~ producto.imagen) }}" alt="{{ producto.nombre }}">
+    <h2>{{ producto.nombre }}</h2>
+    <p>{{ producto.descripcion }}</p>
+    <p>Precio: ${{ producto.precio }}</p>
+
+    <button onclick="addToCart('{{ producto._id }}')" class="btn-agregar">Agregar al carrito</button>
+</div>
+
+<hr>
+
+<h3>Más productos recomendados</h3>
+<div class="recommended-productos">
+    {% for rec in productos %}
+        {% if rec._id != producto._id %}
+        <div class="producto-card">
+            <a href="{{ url_for('producto_detalle', producto_id=rec._id) }}">
+                <img src="{{ url_for('static', filename='img/' ~ rec.imagen) }}" alt="{{ rec.nombre }}">
+                <h4>{{ rec.nombre }}</h4>
+            </a>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+function addToCart(productId){
+    fetch(`/add_to_cart_ajax/${productId}`)
+    .then(response => response.json())
+    .then(data => {
+        if(data.success){
+            alert("Producto agregado al carrito");
+            // opcional: actualizar carrito visual
+        } else {
+            alert("Error: " + data.error);
+        }
+    });
+}
+</script>

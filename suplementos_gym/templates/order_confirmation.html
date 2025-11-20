@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="confirmacion-container">
+  <div class="confirmacion-box">
+    <h1>🎉 ¡Compra confirmada!</h1>
+
+    <p>Gracias por tu compra, <strong>{{ user.nombre }}</strong>.</p>
+
+    <p>Tu pedido llegará pronto a:</p>
+    <p class="direccion">{{ direccion }}</p>
+
+    {% if cart_items %}
+    <div class="resumen-pedido">
+      <h3>Resumen del pedido:</h3>
+      <ul>
+        {% for item in cart_items %}
+        <li>{{ item.nombre }} (x{{ item.quantity }}) — ${{ item.subtotal }}</li>
+        {% endfor %}
+      </ul>
+      <p class="total-final">Total pagado: <strong>${{ total }}</strong></p>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn-volver">Volver al inicio 🏠</a>
+  </div>
+</section>
+
+{% endblock %}

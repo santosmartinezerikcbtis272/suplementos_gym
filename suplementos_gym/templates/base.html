@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Suplementos gym {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="{{ url_for('index') }}">Inicio</a>
+        <a href="{{ url_for('cart') }}">Carrito</a>
+        {% if user %}
+            <span>cuenta {{ user['username'] }}</span>
+        {% else %}
+            <a href="{{ url_for('login') }}">iniciar sesiòn</a>
+        {% endif %}
+        <form action="{{ url_for('index') }}" method="get">
+            <input type="text" name="search" placeholder="Buscar productos...">
+            <button type="submit">Buscar</button>
+        </form>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            suplementos gym &copy; {{ current_year }}
+        </div>
+    </footer>
+</body>
+</html>
+
+
